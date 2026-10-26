@@ -72,8 +72,10 @@ $('close-lightbox').addEventListener('click',()=>$('lightbox').close());
 function advancePhoto(delta){currentPhoto=(currentPhoto+delta+photos.length)%photos.length;showPhoto();}
 $('prev-photo').addEventListener('click',()=>advancePhoto(-1));$('next-photo').addEventListener('click',()=>advancePhoto(1));
 $('lightbox').addEventListener('keydown',e=>{if(e.key==='ArrowLeft')advancePhoto(-1);if(e.key==='ArrowRight')advancePhoto(1);});
-function updateRoute(){const url=new URL('https://www.google.com/maps/dir/');url.search=new URLSearchParams({api:'1',origin:'Embassy Lodge, House 22, Street 4, F-6/3, Islamabad, Pakistan',destination:$('destination').value,travelmode:$('travel').value});$('route-link').href=url.href;}
-$('destination').addEventListener('change',updateRoute);$('travel').addEventListener('change',updateRoute);updateRoute();
+function updateRoute(){const url=new URL('https://www.google.com/maps/dir/');url.search=new URLSearchParams({api:'1',origin:'Embassy Lodge, House 22, Street 4, F-6/3, Islamabad, Pakistan',destination:$('destination').value==='custom'?$('custom-destination').value.trim():$('destination').value,travelmode:$('travel').value});$('route-link').href=url.href;}
+$('destination').addEventListener('change',()=>{$('custom-destination-field').hidden=$('destination').value!=='custom';updateRoute();});
+$('custom-destination').addEventListener('input',updateRoute);
+$('route-link').addEventListener('click',event=>{if($('destination').value==='custom'&&!$('custom-destination').value.trim()){event.preventDefault();$('custom-destination').focus();}});$('travel').addEventListener('change',updateRoute);updateRoute();
 // Date-only arithmetic avoids daylight-saving and browser locale differences.
 function nextDay(date){return new Date(Date.parse(date+'T00:00:00Z')+86400000).toISOString().slice(0,10);}
 const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Karachi',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
@@ -87,14 +89,24 @@ function updateEstimate(){
  $('estimate').textContent=family?'Ask for a quote':'PKR '+quote(Number($('adults').value),Number($('mattresses').value),valid?nights:1).toLocaleString('en-PK');
 }
 $('checkin').addEventListener('change',()=>{if($('checkin').value){$('checkout').min=nextDay($('checkin').value);if($('checkout').value&&$('checkout').value<=$('checkin').value)$('checkout').value=nextDay($('checkin').value);}updateEstimate();});
-['checkout','adults','mattresses','sharing','room-type'].forEach(id=>$(id).addEventListener('change',updateEstimate));
+['checkout','adults','mattresses','room-type'].forEach(id=>$(id).addEventListener('change',updateEstimate));
+$('children').addEventListener('change',()=>{
+ const children=Number($('children').value);
+ $('children-details').hidden=children===0;
+ for(const option of $('mattresses').options)option.disabled=Number(option.value)>children;
+ if(Number($('mattresses').value)>children)$('mattresses').value=String(Math.min(children,2));
+ updateEstimate();
+});
 document.querySelectorAll('[data-room]').forEach(link=>link.addEventListener('click',()=>{$('room-type').value=link.dataset.room;updateEstimate();}));
 $('booking-form').addEventListener('submit',event=>{
  event.preventDefault();$('form-error').textContent='';
  const nights=stayNights();
  if($('checkin').value<today || !Number.isFinite(nights) || nights<1){$('form-error').textContent='Please choose valid dates, with check-out after check-in.';return;}
  const family=$('room-type').value==='Interconnected / family rooms';
- const message=`Hello Embassy Lodge, I found you through your website.\n\nPlease check availability:\nCheck-in: ${$('checkin').value}\nCheck-out: ${$('checkout').value} (${nights} nights)\nAdults: ${$('adults').value}\nChildren needing mattresses: ${$('mattresses').value}\nChildren sharing existing bedding: ${$('sharing').value}\nPreference: ${$('room-type').value}\n${family?'Please quote for the rooms we need.':'Website estimate for one room: '+$('estimate').textContent+' including 15% GST.'}\n\nPlease confirm the room setup, total price, deposit and cancellation terms.\nWebsite reference: EL-WEB`;
+ const children=Number($('children').value);
+ const party=`${$('adults').value} adult(s)`+(children?`, ${children} child(ren), ${$('mattresses').value} child mattress(es)`:'');
+ const message=`Hello Embassy Lodge, is a ${$('room-type').value.toLowerCase()} available?\n${$('checkin').value} to ${$('checkout').value} · ${nights} night(s)\n${party}\nPlease confirm availability and total price. [Website]`;
+
  track('whatsapp_click','enquiry_form');
  window.location.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(message);
 });
