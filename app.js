@@ -110,3 +110,5 @@ $('booking-form').addEventListener('submit',event=>{
  track('whatsapp_click','enquiry_form');
  window.location.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(message);
 });
+// Temporary closure notice: keep keyboard and screen-reader focus inside it while it is present.
+if($('closure')){document.querySelectorAll('body > header, body > main, body > footer, .mobile-contact').forEach(el=>{el.inert=true;});}

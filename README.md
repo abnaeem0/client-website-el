@@ -69,3 +69,7 @@ Prices appear in both HTML and the calculator; update both together. Current for
 ## Validation
 
 JavaScript syntax checked; local asset and anchor references checked. Desktop browser preview used to verify price updates (two nights, two adults, two mattresses = PKR 31,050) and expanding to 20 photos. CSS includes mobile breakpoints, accessible focus styles and reduced-motion support. Test the final hosted page on your own phone before starting the ad campaign.
+
+## Temporary closure notice
+
+While closed, a notice covers the site (`<div id="closure">` near the end of `index.html`), fading the page behind it and blocking clicks. The analytics consent box is hidden while it shows. To reopen, delete that block; the styles (end of `styles.css`) and the small script (end of `app.js`) do nothing without it and can be left or removed. Update the address, photos and prices for the new location at the same time.
