@@ -69,3 +69,16 @@ Prices appear in both HTML and the calculator; update both together. Current for
 ## Validation
 
 JavaScript syntax checked; local asset and anchor references checked. Desktop browser preview used to verify price updates (two nights, two adults, two mattresses = PKR 31,050) and expanding to 20 photos. CSS includes mobile breakpoints, accessible focus styles and reduced-motion support. Test the final hosted page on your own phone before starting the ad campaign.
+
+## Temporarily closed / reopening
+
+The site is in **closed mode**: `index.html` has `<body class="closed">`, which shows the "Temporarily closed" notice and hides every section marked `data-when="open"`. The full site (rooms, prices, booking form, location, gallery, FAQs) is still in the file, unchanged.
+
+To reopen at the new location:
+1. In `index.html`, change `<body class="closed">` to `<body>`. The full site reappears and the closure notice hides itself.
+2. Update the address everywhere it appears: hero eyebrow, location section, Google Maps link, the route origin in `app.js` (`updateRoute`), footer, the FAQ "Is this the same Embassy Lodge?", and `privacy.html`.
+3. In the `<head>`, swap the closed title/description for the open-mode ones kept in the `OPEN-MODE HEAD` comment, and uncomment its structured data (with the new address).
+4. Replace photos in `assets/` and the `photos` list in `app.js` with the new property; check prices, amenities and check-in times.
+5. Reopen the Booking.com listing and update Google Business Profile.
+
+To preview the full site at any time without changing the file, open the page and run `document.body.classList.remove('closed')` in the browser console.
