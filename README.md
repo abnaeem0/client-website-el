@@ -29,6 +29,7 @@ Tracked custom events:
 - `booking_platform_click`: Booking.com is opened
 - `reviews_click`: the Google listing is opened from the review explanation
 - `social_click`: Instagram is opened
+- `email_click`: the email link is clicked (closure notice)
 - `explore_click`: the city guide is opened
 - `gallery_open`: a gallery image is opened
 
