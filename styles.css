@@ -44,3 +44,7 @@ body:has(#closure){overflow:hidden}.closure{position:fixed;inset:0;z-index:50;ba
 .rates{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:36px;align-items:start}.rates .price-list{margin:0;border-top:1px solid var(--line)}.rates .best-rate{font-size:18px;margin:18px 0 0}.rates .best-rate .text-link{font:600 14px Arial,sans-serif;margin-top:10px}
 .halls-note{margin-top:20px}
 @media(max-width:700px){.rates{grid-template-columns:1fr;gap:20px}#lightbox-image{height:auto;max-height:60vh}}
+.rates{display:block;margin-top:30px;border-top:1px solid var(--line);padding-top:24px}.rate-line{font:22px/1.4 Georgia,serif;color:var(--navy)}.rate-line strong{font-weight:400}.rate-line span{font:14px Arial,sans-serif;color:var(--muted)}.rates .fine{margin-top:8px}.rates .fine .text-link{font-size:12px;padding-bottom:1px}
+#breakfast .amenities{grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:30px}
+@media(max-width:700px){#breakfast .amenities{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.rate-line span{display:block}}

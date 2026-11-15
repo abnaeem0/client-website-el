@@ -49,13 +49,32 @@ document.addEventListener('click',event=>{
 });
 $('year').textContent=new Date().getFullYear();
 const photos = [
- ['exterior-front-gate','Front of the lodge','The front of the lodge at House 90-A'],['double-room-terrazzo-bed','Double room','Double room with seating'],['twin-room-window','Twin room','Two beds beside a large window'],['lobby-staircase','Lobby','Lobby and spiral staircase'],
- ['family-room-twin-beds','Larger room','Larger room with two double beds'],['dining-hall','Dining hall','Dining hall'],['meeting-table','Meeting hall','Meeting table set for a session'],['entrance-guard','Entrance','Staffed entrance to the property'],
- ['double-room-blue-wall','Double room','Double room with desk and seating'],['suite-interconnected','Interconnected rooms','Interconnected rooms'],['atrium-skylight','Skylight','Looking up through the atrium skylight'],['double-room-wardrobe','Double room','Double room with wardrobe and seating'],
- ['upper-landing','Upper landing','Upper-floor landing and staircase'],['twin-room-towel-swans','Twin room','Twin room made up for arrival'],['breakfast-parathas','Breakfast','Fresh parathas at breakfast'],['double-room-balcony-door','Double room','Double room with a balcony door'],
- ['corridor','Corridor','Ground-floor corridor'],['double-room-wood-doors','Double room','Double room with wooden doors'],['family-room-wide','Larger room','Larger room with two beds, desk and seating'],['meeting-table-white-setup','Meeting hall','Meeting table with refreshments counter'],
- ['double-room-terrazzo','Double room','Double room with en-suite bathroom door'],['twin-room-mirror','Twin room','Twin room reflected in a mirror'],['exterior-dusk','Evening','The lodge from across the road at dusk'],['exterior-balcony','Balcony side','The balcony side of the house'],
- ['double-room-terrazzo-desk','Desk and wardrobe','Desk, TV and wardrobe in a double room'],['meeting-table-detail','Meeting detail','Place setting at the meeting table']
+ ['lobby-staircase','Lobby','Lobby and spiral staircase'],
+ ['double-room-blue-wall','Double room','Double room with desk and seating'],
+ ['suite-interconnected','Interconnected rooms','Interconnected rooms'],
+ ['entrance-guard','Entrance','Staffed entrance to the property'],
+ ['family-room-wide','Larger room','Larger room with two beds, desk and seating'],
+ ['atrium-skylight','Skylight','Looking up through the atrium skylight'],
+ ['upper-landing','Upper landing','Upper-floor landing and staircase'],
+ ['exterior-dusk','Evening','The lodge from across the road at dusk'],
+ ['exterior-front-gate','Front of the lodge','The front of the lodge at House 90-A'],
+ ['double-room-terrazzo-bed','Double room','Double room with seating'],
+ ['twin-room-window','Twin room','Two beds beside a large window'],
+ ['family-room-twin-beds','Larger room','Larger room with two double beds'],
+ ['dining-hall','Dining hall','Dining hall'],
+ ['meeting-table','Meeting hall','Meeting table set for a session'],
+ ['double-room-wardrobe','Double room','Double room with wardrobe and seating'],
+ ['twin-room-towel-swans','Twin room','Twin room made up for arrival'],
+ ['breakfast-parathas','Breakfast','Fresh parathas at breakfast'],
+ ['double-room-balcony-door','Double room','Double room with a balcony door'],
+ ['corridor','Corridor','Ground-floor corridor'],
+ ['double-room-wood-doors','Double room','Double room with wooden doors'],
+ ['meeting-table-white-setup','Meeting hall','Meeting table with refreshments counter'],
+ ['double-room-terrazzo','Double room','Double room with en-suite bathroom door'],
+ ['twin-room-mirror','Twin room','Twin room reflected in a mirror'],
+ ['exterior-balcony','Balcony side','The balcony side of the house'],
+ ['double-room-terrazzo-desk','Desk and wardrobe','Desk, TV and wardrobe in a double room'],
+ ['meeting-table-detail','Meeting detail','Place setting at the meeting table']
 ];
 let expanded=false,currentPhoto=0;
 function renderGallery(){
