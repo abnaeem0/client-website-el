@@ -11,3 +11,6 @@ body:has(#closure){overflow:hidden}.closure{position:fixed;inset:0;z-index:50;ba
 
 /* Meeting and dining halls: two cards */
 .room-grid.two{grid-template-columns:repeat(2,1fr)}@media(max-width:700px){.room-grid.two{grid-template-columns:1fr}}
+
+/* Floating WhatsApp button, shown on every screen size */
+.wa-float{position:fixed;right:20px;bottom:20px;z-index:19;display:inline-flex;align-items:center;gap:8px;background:#0f7a4d;color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;font-weight:600;box-shadow:0 6px 20px #0003;text-decoration:none}.wa-float:hover,.wa-float:focus-visible{background:#0c633e}@media(max-width:700px){.wa-float{right:14px;bottom:calc(74px + env(safe-area-inset-bottom));padding:11px 15px;font-size:13px}}@media print{.wa-float{display:none}}

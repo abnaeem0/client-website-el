@@ -23,7 +23,7 @@ All asset links are relative, so this works under a repository URL and a custom 
 GA4 ID `G-K84HNTXJLX` is configured in `app.js`. It loads after a visitor allows analytics; declining keeps the tag unloaded. Visitors can change their choice from the footer. Ad personalisation and Google signals are disabled. No enquiry details are sent as custom event parameters.
 
 Tracked custom events:
-- `whatsapp_click`: the enquiry form opens WhatsApp
+- `whatsapp_click`: WhatsApp is opened (enquiry form, hero, floating button, footer, halls)
 - `call_click`: a phone link is clicked
 - `directions_click`: a Maps link is clicked
 - `booking_platform_click`: Booking.com is opened
