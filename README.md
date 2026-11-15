@@ -29,7 +29,7 @@ Tracked custom events:
 - `booking_platform_click`: Booking.com is opened
 - `reviews_click`: the Google listing is opened from the review explanation
 - `social_click`: Instagram is opened
-- `email_click`: the email link is clicked (closure notice)
+- `email_click`: the email link is clicked
 - `explore_click`: the city guide is opened
 - `gallery_open`: a gallery image is opened
 
@@ -52,9 +52,9 @@ Campaign URL example: append `?utm_source=google&utm_medium=cpc&utm_campaign=f6_
 - Calculator rates, WhatsApp number, gallery and Analytics ID: `app.js`.
 - Colours, spacing, responsive layout: `styles.css`.
 - Privacy wording: `privacy.html`.
-- Photographs: `assets/g6/` (26 optimised WebP images of the G-6/3 property). The older `assets/photo-*.webp` files show the previous F-6 premises and are no longer used.
+- Photographs: `assets/g6/` (26 optimised WebP images of the G-6/3 property). Photos of the previous premises (House 22, Street 4, F-6/3) are kept in `assets/house-22-f6-3/` for the record and are not used on the site.
 
-Prices are set by four values at the `// PRICES` comment in `app.js` (base rate, extra guest, tax, maximum paying guests per room). The page fills every displayed price from them; the figures typed in `index.html` are fallbacks for visitors without JavaScript, so update those too. Current formula: `(10500 + 1500 × (adults - 1 + children needing mattresses)) × 1.2075` (15% GST, then 5% bed tax), multiplied by nights. Sharing children do not affect price. More than four paying guests, or interconnected rooms, show “Ask for a quote”.
+Prices are set by four values at the `// PRICES` comment in `app.js` (base rate, extra guest, tax, maximum paying guests per room). The page fills every displayed price from them; the figures typed in `index.html` are fallbacks for visitors without JavaScript, so update those too. Current formula: one guest is 10,500 × 1.2075 (15% GST, then 5% bed tax) rounded to the nearest 100 = PKR 12,700; each additional paying guest is 1,500 × 1.2075 rounded = PKR 1,800; multiplied by nights. Sharing children do not affect price. More than four paying guests, or interconnected rooms, show “Ask for a quote”.
 
 ## Content notes
 

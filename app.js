@@ -85,15 +85,17 @@ $('route-link').addEventListener('click',event=>{if($('destination').value==='cu
 function nextDay(date){return new Date(Date.parse(date+'T00:00:00Z')+86400000).toISOString().slice(0,10);}
 const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Karachi',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 $('checkin').min=today;$('checkout').min=nextDay(today);
-// PRICES: change these four values to update every price shown on the site.
+// PRICES: change these values to update every price shown on the site.
 const BASE_RATE=10500;      // one guest, per night, before tax
 const EXTRA_GUEST=1500;     // each additional paying guest, before tax
 const TAX=1.15*1.05;        // 15% GST, then 5% bed tax = 20.75%
 const MAX_PAYING=4;         // most rooms take up to this many paying guests
-const withTax=amount=>Math.round(amount*TAX);
+const ROUND_TO=100;         // shown prices are rounded to the nearest 100
+const withTax=amount=>Math.round(amount*TAX/ROUND_TO)*ROUND_TO;
 const pkr=amount=>'PKR '+amount.toLocaleString('en-PK');
-function quote(adults,mattresses,nights){return withTax(BASE_RATE+EXTRA_GUEST*(adults-1+mattresses))*nights;}
-document.querySelectorAll('[data-price]').forEach(el=>{const k=el.dataset.price;el.textContent=pkr(k==='extra'?withTax(EXTRA_GUEST):withTax(BASE_RATE+EXTRA_GUEST*(Number(k)-1)));});
+const perNight=paying=>withTax(BASE_RATE)+withTax(EXTRA_GUEST)*(paying-1);
+function quote(adults,mattresses,nights){return perNight(adults+mattresses)*nights;}
+document.querySelectorAll('[data-price]').forEach(el=>{const k=el.dataset.price;el.textContent=pkr(k==='extra'?withTax(EXTRA_GUEST):perNight(Number(k)));});
 function stayNights(){return Math.round((Date.parse($('checkout').value+'T00:00:00Z')-Date.parse($('checkin').value+'T00:00:00Z'))/86400000);}
 function updateEstimate(){
  const nights=stayNights();const valid=Number.isFinite(nights)&&nights>0;
