@@ -20,3 +20,11 @@ body:has(#closure){overflow:hidden}.closure{position:fixed;inset:0;z-index:50;ba
 #halls .comfort-copy .text-link{margin-top:22px}
 @media(max-width:700px){.desk-only{display:none!important}.mobile-contact{gap:12px}.mobile-contact .button{flex:1}}
 .location-grid .nearby{align-self:start}
+/* Layout: merged rooms, sketch map, things to do, three contact buttons */
+.nav-actions{display:inline-flex;gap:8px}.header nav .nav-actions .button{gap:6px;padding:9px 14px;min-height:40px}
+.rooms-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.rooms-strip figure{margin:0}.rooms-strip img{aspect-ratio:1.35;height:auto}.rooms-strip figcaption{font-size:10px;letter-spacing:1.7px;text-transform:uppercase;color:var(--green);margin-top:10px}.rooms-strip+.fine{margin-top:20px}
+.loc-grid{display:grid;grid-template-columns:1fr .9fr;gap:10px 80px;grid-template-areas:"intro map" "detail map"}.loc-intro{grid-area:intro}.loc-map{grid-area:map;align-self:start;background:#fff;border:1px solid var(--line);padding:16px}.loc-detail{grid-area:detail}.loc-map svg{display:block;width:100%;height:auto;font-family:Arial,sans-serif}.loc-map p{font-size:12px;color:var(--muted);margin-top:12px}.loc-map .text-link{font-size:12px;margin-left:4px}.loc-grid .lead{margin-bottom:20px}.loc-grid address{font-style:normal;border-left:2px solid var(--red);padding-left:18px;margin:26px 0 10px;font-size:16px}.loc-detail .around{margin-top:0}
+.todo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}.todo-grid h3{font:24px Georgia,serif;margin:0 0 6px}.todo-grid ul{list-style:none;margin:0;padding:0;font-size:14px}.todo-grid li{padding:12px 0;border-bottom:1px solid var(--line)}.todo-events{margin-top:30px;font-size:12px;color:var(--muted)}.todo-events span{display:block;margin-top:8px}
+@media(max-width:1100px){.header nav>a:not(.button){font-size:13px}.header nav{gap:16px}}
+@media(max-width:1000px){.loc-grid{gap:10px 40px}.todo-grid{gap:26px}}
+@media(max-width:700px){.rooms-strip{gap:8px}.rooms-strip figcaption{font-size:9px;letter-spacing:1.2px}.loc-grid{grid-template-columns:1fr;grid-template-areas:"intro" "map" "detail";gap:22px}.todo-grid{grid-template-columns:1fr;gap:26px}.mobile-contact{gap:8px}.mobile-contact .button{flex:1;padding:10px 6px;gap:6px;min-height:46px}.mobile-contact .button:first-child{flex:1.7;border-color:var(--red)}}
