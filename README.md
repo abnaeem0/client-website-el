@@ -52,9 +52,9 @@ Campaign URL example: append `?utm_source=google&utm_medium=cpc&utm_campaign=f6_
 - Calculator rates, WhatsApp number, gallery and Analytics ID: `app.js`.
 - Colours, spacing, responsive layout: `styles.css`.
 - Privacy wording: `privacy.html`.
-- Photographs: `assets/` (20 optimised WebP images from your uploads).
+- Photographs: `assets/g6/` (26 optimised WebP images of the G-6/3 property). The older `assets/photo-*.webp` files show the previous F-6 premises and are no longer used.
 
-Prices appear in both HTML and the calculator; update both together. Current formula: `(9000 + 1500 × (adults - 1 + children needing mattresses)) × 1.15`, multiplied by nights. Sharing children do not affect price. Family/interconnected room requests show “Ask for a quote” rather than incorrectly estimating several rooms as one. The form supports 1–2 adults and up to two child mattresses for a one-room estimate. Larger groups should contact reception by phone for a quote.
+Prices are set by four values at the `// PRICES` comment in `app.js` (base rate, extra guest, tax, maximum paying guests per room). The page fills every displayed price from them; the figures typed in `index.html` are fallbacks for visitors without JavaScript, so update those too. Current formula: `(10500 + 1500 × (adults - 1 + children needing mattresses)) × 1.2075` (15% GST, then 5% bed tax), multiplied by nights. Sharing children do not affect price. More than four paying guests, or interconnected rooms, show “Ask for a quote”.
 
 ## Content notes
 

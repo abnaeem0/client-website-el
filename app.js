@@ -49,30 +49,35 @@ document.addEventListener('click',event=>{
 });
 $('year').textContent=new Date().getFullYear();
 const photos = [
- [36,'House and lawn','The house across the garden'],[30,'Double room','Double room with a garden-facing window'],[23,'Twin room','Twin beds with a window overlooking greenery'],[12,'Bathroom','Bathroom with shower enclosure'],
- [43,'Shared lounge','Shared lounge and seating'],[22,'Dining room','Dining room at the lodge'],[16,'Spacious room','Spacious bedroom with sofas'],[37,'Entrance','Gated entrance to the property'],[46,'Driveway','Shaded driveway'],[50,'Garden view','A view across the lawn'],[24,'Window seating','Seating beside a garden-facing window'],[28,'Double room','Double room and seating area'],[29,'Room interior','Another double-room arrangement'],[13,'Double bed','A representative double room'],[17,'Room and seating','Bedroom with seating'],[20,'Room layout','Another view of a double room'],[42,'Twin beds','Twin-room bed arrangement'],[38,'Room with sofas','Bedroom with lounge seating'],[5,'Bathroom','Another bathroom and shower'],[14,'Sitting area','Shared sitting area']
+ ['exterior-front-gate','Front of the lodge','The front of the lodge at House 90-A'],['double-room-terrazzo-bed','Double room','Double room with seating'],['twin-room-window','Twin room','Two beds beside a large window'],['lobby-staircase','Lobby','Lobby and spiral staircase'],
+ ['family-room-twin-beds','Larger room','Larger room with two double beds'],['dining-hall','Dining hall','Dining hall'],['meeting-table','Meeting hall','Meeting table set for a session'],['entrance-guard','Entrance','Staffed entrance to the property'],
+ ['double-room-blue-wall','Double room','Double room with desk and seating'],['suite-interconnected','Interconnected rooms','Interconnected rooms'],['atrium-skylight','Skylight','Looking up through the atrium skylight'],['double-room-wardrobe','Double room','Double room with wardrobe and seating'],
+ ['upper-landing','Upper landing','Upper-floor landing and staircase'],['twin-room-towel-swans','Twin room','Twin room made up for arrival'],['breakfast-parathas','Breakfast','Fresh parathas at breakfast'],['double-room-balcony-door','Double room','Double room with a balcony door'],
+ ['corridor','Corridor','Ground-floor corridor'],['double-room-wood-doors','Double room','Double room with wooden doors'],['family-room-wide','Larger room','Larger room with two beds, desk and seating'],['meeting-table-white-setup','Meeting hall','Meeting table with refreshments counter'],
+ ['double-room-terrazzo','Double room','Double room with en-suite bathroom door'],['twin-room-mirror','Twin room','Twin room reflected in a mirror'],['exterior-dusk','Evening','The lodge from across the road at dusk'],['exterior-balcony','Balcony side','The balcony side of the house'],
+ ['double-room-terrazzo-desk','Desk and wardrobe','Desk, TV and wardrobe in a double room'],['meeting-table-detail','Meeting detail','Place setting at the meeting table']
 ];
 let expanded=false,currentPhoto=0;
 function renderGallery(){
  $('photo-grid').replaceChildren();
  photos.slice(0,expanded?photos.length:8).forEach((photo,index)=>{
   const button=document.createElement('button');button.type='button';button.setAttribute('aria-label','Open photo: '+photo[1]);
-  const img=document.createElement('img');img.src=`assets/photo-${photo[0]}.webp`;img.alt=photo[2];img.loading='lazy';img.width=400;img.height=333;
+  const img=document.createElement('img');img.src=`assets/g6/${photo[0]}.webp`;img.alt=photo[2];img.loading='lazy';img.width=400;img.height=333;
   const plus=document.createElement('span');plus.textContent='↗';plus.setAttribute('aria-hidden','true');button.append(img,plus);
   button.addEventListener('click',()=>{currentPhoto=index;showPhoto();$('lightbox').showModal();track('gallery_open','gallery');});
   $('photo-grid').append(button);
  });
- $('more-photos').textContent=expanded?'Show fewer photos −':'View all 20 photos +';
+ $('more-photos').textContent=expanded?'Show fewer photos −':`View all ${photos.length} photos +`;
  $('more-photos').setAttribute('aria-expanded',String(expanded));
 }
-function showPhoto(){const p=photos[currentPhoto];$('lightbox-image').src=`assets/photo-${p[0]}.webp`;$('lightbox-image').alt=p[2];$('photo-caption').textContent=p[2];$('photo-count').textContent=`${currentPhoto+1} / ${photos.length}`;}
+function showPhoto(){const p=photos[currentPhoto];$('lightbox-image').src=`assets/g6/${p[0]}.webp`;$('lightbox-image').alt=p[2];$('photo-caption').textContent=p[2];$('photo-count').textContent=`${currentPhoto+1} / ${photos.length}`;}
 renderGallery();
 $('more-photos').addEventListener('click',()=>{expanded=!expanded;renderGallery();});
 $('close-lightbox').addEventListener('click',()=>$('lightbox').close());
 function advancePhoto(delta){currentPhoto=(currentPhoto+delta+photos.length)%photos.length;showPhoto();}
 $('prev-photo').addEventListener('click',()=>advancePhoto(-1));$('next-photo').addEventListener('click',()=>advancePhoto(1));
 $('lightbox').addEventListener('keydown',e=>{if(e.key==='ArrowLeft')advancePhoto(-1);if(e.key==='ArrowRight')advancePhoto(1);});
-function updateRoute(){const url=new URL('https://www.google.com/maps/dir/');url.search=new URLSearchParams({api:'1',origin:'Embassy Lodge, House 22, Street 4, F-6/3, Islamabad, Pakistan',destination:$('destination').value==='custom'?$('custom-destination').value.trim():$('destination').value,travelmode:$('travel').value});$('route-link').href=url.href;}
+function updateRoute(){const url=new URL('https://www.google.com/maps/dir/');url.search=new URLSearchParams({api:'1',origin:'Embassy Lodge, House 90-A, Luqman Hakeem Road, G-6/3, Islamabad, Pakistan',destination:$('destination').value==='custom'?$('custom-destination').value.trim():$('destination').value,travelmode:$('travel').value});$('route-link').href=url.href;}
 $('destination').addEventListener('change',()=>{$('custom-destination-field').hidden=$('destination').value!=='custom';updateRoute();});
 $('custom-destination').addEventListener('input',updateRoute);
 $('route-link').addEventListener('click',event=>{if($('destination').value==='custom'&&!$('custom-destination').value.trim()){event.preventDefault();$('custom-destination').focus();}});$('travel').addEventListener('change',updateRoute);updateRoute();
@@ -80,13 +85,22 @@ $('route-link').addEventListener('click',event=>{if($('destination').value==='cu
 function nextDay(date){return new Date(Date.parse(date+'T00:00:00Z')+86400000).toISOString().slice(0,10);}
 const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Karachi',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 $('checkin').min=today;$('checkout').min=nextDay(today);
-function quote(adults,mattresses,nights){return Math.round((9000+1500*(adults-1+mattresses))*1.15)*nights;}
+// PRICES: change these four values to update every price shown on the site.
+const BASE_RATE=10500;      // one guest, per night, before tax
+const EXTRA_GUEST=1500;     // each additional paying guest, before tax
+const TAX=1.15*1.05;        // 15% GST, then 5% bed tax = 20.75%
+const MAX_PAYING=4;         // most rooms take up to this many paying guests
+const withTax=amount=>Math.round(amount*TAX);
+const pkr=amount=>'PKR '+amount.toLocaleString('en-PK');
+function quote(adults,mattresses,nights){return withTax(BASE_RATE+EXTRA_GUEST*(adults-1+mattresses))*nights;}
+document.querySelectorAll('[data-price]').forEach(el=>{const k=el.dataset.price;el.textContent=pkr(k==='extra'?withTax(EXTRA_GUEST):withTax(BASE_RATE+EXTRA_GUEST*(Number(k)-1)));});
 function stayNights(){return Math.round((Date.parse($('checkout').value+'T00:00:00Z')-Date.parse($('checkin').value+'T00:00:00Z'))/86400000);}
 function updateEstimate(){
  const nights=stayNights();const valid=Number.isFinite(nights)&&nights>0;
- const family=$('room-type').value==='Interconnected / family rooms';
- $('estimate-label').textContent=family?'Multiple rooms':'Estimated '+(valid?`${nights}-night room total`:'room rate / night');
- $('estimate').textContent=family?'Ask for a quote':'PKR '+quote(Number($('adults').value),Number($('mattresses').value),valid?nights:1).toLocaleString('en-PK');
+ const paying=Number($('adults').value)+Number($('mattresses').value);
+ const family=$('room-type').value==='Interconnected rooms'||paying>MAX_PAYING;
+ $('estimate-label').textContent=family?'Multiple rooms or a larger group':'Estimated '+(valid?`${nights}-night room total`:'room rate / night');
+ $('estimate').textContent=family?'Ask for a quote':pkr(quote(Number($('adults').value),Number($('mattresses').value),valid?nights:1));
 }
 $('checkin').addEventListener('change',()=>{if($('checkin').value){$('checkout').min=nextDay($('checkin').value);if($('checkout').value&&$('checkout').value<=$('checkin').value)$('checkout').value=nextDay($('checkin').value);}updateEstimate();});
 ['checkout','adults','mattresses','room-type'].forEach(id=>$(id).addEventListener('change',updateEstimate));
@@ -102,7 +116,6 @@ $('booking-form').addEventListener('submit',event=>{
  event.preventDefault();$('form-error').textContent='';
  const nights=stayNights();
  if($('checkin').value<today || !Number.isFinite(nights) || nights<1){$('form-error').textContent='Please choose valid dates, with check-out after check-in.';return;}
- const family=$('room-type').value==='Interconnected / family rooms';
  const children=Number($('children').value);
  const party=`${$('adults').value} adult(s)`+(children?`, ${children} child(ren), ${$('mattresses').value} child mattress(es)`:'');
  const message=`Hello Embassy Lodge, is a ${$('room-type').value.toLowerCase()} available?\n${$('checkin').value} to ${$('checkout').value} · ${nights} night(s)\n${party}\nPlease confirm availability and total price. [Website]`;
