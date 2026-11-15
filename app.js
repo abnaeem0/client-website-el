@@ -112,5 +112,7 @@ $('booking-form').addEventListener('submit',event=>{
 });
 // Directions experiment: count how often the folded directions tool is opened.
 $('route-tool').addEventListener('toggle',()=>{if($('route-tool').open)track('directions_open','location');});
+// Things to do: count how often each folded list is opened.
+[['fold-places','places_open'],['fold-events','events_open']].forEach(([id,name])=>$(id).addEventListener('toggle',()=>{if($(id).open)track(name,'things');}));
 // Temporary closure notice: keep keyboard and screen-reader focus inside it while it is present.
 if($('closure')){document.querySelectorAll('body > header, body > main, body > footer, .mobile-contact').forEach(el=>{el.inert=true;});}

@@ -25,8 +25,9 @@ GA4 ID `G-K84HNTXJLX` is configured in `app.js`. It loads after a visitor allows
 Tracked custom events:
 - `whatsapp_click`: WhatsApp is opened (placements: `header`, `mobile`, `halls`, `price_guide`, `footer`)
 - `call_click`: a phone link is clicked
-- `directions_open`: the folded "Where are you heading?" tool is opened
-- `directions_click`: a Maps link is clicked (`header`/`mobile` = Maps button, `location` = link under the sketch map, `route` = Get directions from the tool)
+- `directions_open`: the folded "How far is your destination from us?" tool is opened
+- `places_open` / `events_open`: the folded "Popular places to visit" or "What’s on in Islamabad" list is opened
+- `directions_click`: a Maps link is clicked (`header`/`mobile` = Maps button, `location` = link under the address, `route` = Get directions from the tool)
 - `booking_platform_click`: Booking.com is opened
 - `reviews_click`: the Google listing is opened from the review explanation
 - `social_click`: Instagram is opened
