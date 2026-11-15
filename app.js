@@ -62,7 +62,7 @@ function renderGallery(){
  $('photo-grid').replaceChildren();
  photos.slice(0,expanded?photos.length:8).forEach((photo,index)=>{
   const button=document.createElement('button');button.type='button';button.setAttribute('aria-label','Open photo: '+photo[1]);
-  const img=document.createElement('img');img.src=`assets/g6/${photo[0]}.webp`;img.alt=photo[2];img.loading='lazy';img.width=400;img.height=333;
+  const img=document.createElement('img');img.src=`assets/g6/${photo[0]}.webp`;img.alt=photo[2];img.loading='lazy';img.width=400;img.height=300;
   const plus=document.createElement('span');plus.textContent='↗';plus.setAttribute('aria-hidden','true');button.append(img,plus);
   button.addEventListener('click',()=>{currentPhoto=index;showPhoto();$('lightbox').showModal();track('gallery_open','gallery');});
   $('photo-grid').append(button);
@@ -90,26 +90,6 @@ const withTax=amount=>Math.round(amount*TAX/ROUND_TO)*ROUND_TO;
 const pkr=amount=>'PKR '+amount.toLocaleString('en-PK');
 const perNight=guests=>withTax(BASE_RATE)+withTax(EXTRA_GUEST)*(guests-1);
 document.querySelectorAll('[data-price]').forEach(el=>{el.textContent=pkr(perNight(Number(el.dataset.price)));});
-// Rough price guide: nothing is required; it only prepares a WhatsApp message.
-function estimate(){
- const guests=$('guests').value,nights=$('nights').value,room=$('room-type').value;
- if(guests==='more'||nights==='more'||room==='Interconnected rooms')return null;
- return perNight(Number(guests))*Number(nights);
-}
-function updateEstimate(){
- const total=estimate(),nights=Number($('nights').value);
- $('estimate-label').textContent=total===null?'Larger group or longer stay':(nights>1?`Estimated ${nights}-night total`:'Estimated rate for one night');
- $('estimate').textContent=total===null?'Ask for a quote':pkr(total);
-}
-['guests','nights','room-type'].forEach(id=>$(id).addEventListener('change',updateEstimate));updateEstimate();
-$('booking-form').addEventListener('submit',event=>{
- event.preventDefault();
- const total=estimate();
- const pick=id=>$(id).options[$(id).selectedIndex].text;
- const message=`Hello Embassy Lodge, I would like to ask about a stay.\nGuests: ${pick('guests')} · Nights: ${pick('nights')}\nRoom: ${pick('room-type')}`+(total===null?'':`\nWebsite estimate: ${pkr(total)}`)+`\nPlease confirm availability and your best price. [Website]`;
- track('whatsapp_click','price_guide');
- window.location.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(message);
-});
 // Directions experiment: count how often the folded directions tool is opened.
 $('route-tool').addEventListener('toggle',()=>{if($('route-tool').open)track('directions_open','location');});
 // Things to do: count how often each folded list is opened.

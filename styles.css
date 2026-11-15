@@ -37,3 +37,10 @@ body:has(#closure){overflow:hidden}.closure{position:fixed;inset:0;z-index:50;ba
 @media(max-width:700px){
 .rooms-strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin:0 -20px;padding:0 20px 6px;scroll-padding-left:20px;scrollbar-width:none}.rooms-strip::-webkit-scrollbar{display:none}.rooms-strip figure{flex:0 0 72%;scroll-snap-align:start}
 .loc-grid{grid-template-columns:1fr;grid-template-areas:"intro" "detail"}.things-grid{grid-template-columns:1fr;gap:24px}}
+
+/* One photo shape (4:3) everywhere; simpler page */
+.hero-image img,.rooms-strip img,.comfort-photo img,.gallery img{aspect-ratio:4/3;height:auto;object-position:center}
+#lightbox-image{width:100%;height:auto;aspect-ratio:4/3;max-height:70vh;object-fit:contain}
+.rates{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:36px;align-items:start}.rates .price-list{margin:0;border-top:1px solid var(--line)}.rates .best-rate{font-size:18px;margin:18px 0 0}.rates .best-rate .text-link{font:600 14px Arial,sans-serif;margin-top:10px}
+.halls-note{margin-top:20px}
+@media(max-width:700px){.rates{grid-template-columns:1fr;gap:20px}#lightbox-image{height:auto;max-height:60vh}}
