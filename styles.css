@@ -11,6 +11,12 @@ body:has(#closure){overflow:hidden}.closure{position:fixed;inset:0;z-index:50;ba
 
 /* Meeting and dining halls: two cards */
 .room-grid.two{grid-template-columns:repeat(2,1fr)}@media(max-width:700px){.room-grid.two{grid-template-columns:1fr}}
-
-/* Floating WhatsApp button, shown on every screen size */
-.wa-float{position:fixed;right:20px;bottom:20px;z-index:19;display:inline-flex;align-items:center;gap:8px;background:#0f7a4d;color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;font-weight:600;box-shadow:0 6px 20px #0003;text-decoration:none}.wa-float:hover,.wa-float:focus-visible{background:#0c633e}@media(max-width:700px){.wa-float{right:14px;bottom:calc(74px + env(safe-area-inset-bottom));padding:11px 15px;font-size:13px}}@media print{.wa-float{display:none}}
+/* Simplified layout */
+.hero-rate strong b{font-size:18px}
+.around{margin:14px 0 0}.around div{padding:14px 0;border-bottom:1px solid var(--line)}.around div:last-child{border-bottom:0;padding-bottom:0}.around dt{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green)}.around dd{margin:6px 0 0;font-size:14px;line-height:1.6}
+.route-tool{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;margin-top:28px}.route-tool summary{cursor:pointer;font-weight:600;font-size:14px;list-style:none;display:flex;justify-content:space-between;gap:20px}.route-tool summary::-webkit-details-marker{display:none}.route-tool summary:after{content:'+'}.route-tool[open] summary:after{content:'−'}.route-tool .fine{margin-top:12px}.route-tool label{margin-top:16px}.route-tool select,.route-tool input{margin-top:8px}.route-tool #route-link{margin:20px 0 6px;width:100%}
+.whats-on{margin-top:18px;font-size:12px;color:var(--muted)}.whats-on span{display:block;margin-top:8px}
+.best-rate{font:20px/1.5 Georgia,serif;color:var(--navy);margin:22px 0 16px}
+#halls .comfort-copy .text-link{margin-top:22px}
+@media(max-width:700px){.desk-only{display:none!important}.mobile-contact{gap:12px}.mobile-contact .button{flex:1}}
+.location-grid .nearby{align-self:start}

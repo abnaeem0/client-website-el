@@ -23,15 +23,18 @@ All asset links are relative, so this works under a repository URL and a custom 
 GA4 ID `G-K84HNTXJLX` is configured in `app.js`. It loads after a visitor allows analytics; declining keeps the tag unloaded. Visitors can change their choice from the footer. Ad personalisation and Google signals are disabled. No enquiry details are sent as custom event parameters.
 
 Tracked custom events:
-- `whatsapp_click`: WhatsApp is opened (enquiry form, hero, floating button, footer, halls)
+- `whatsapp_click`: WhatsApp is opened (placements: `header`, `hero`, `halls`, `price_guide`, `mobile`, `footer`)
 - `call_click`: a phone link is clicked
-- `directions_click`: a Maps link is clicked
+- `directions_open`: the folded "Where are you heading?" tool is opened
+- `directions_click`: a Maps link is clicked (`location` = Open Google Maps, `route` = Get directions from the tool)
 - `booking_platform_click`: Booking.com is opened
 - `reviews_click`: the Google listing is opened from the review explanation
 - `social_click`: Instagram is opened
 - `email_click`: the email link is clicked
 - `explore_click`: the city guide is opened
 - `gallery_open`: a gallery image is opened
+
+To judge the directions experiment, compare `directions_open` and `directions_click` (placement `route`) with total visits.
 
 Each has a `placement` parameter. A click is NOT a sent message, answered call or confirmed booking. Reception must record confirmed stays and their source.
 
@@ -54,7 +57,7 @@ Campaign URL example: append `?utm_source=google&utm_medium=cpc&utm_campaign=f6_
 - Privacy wording: `privacy.html`.
 - Photographs: `assets/g6/` (26 optimised WebP images of the G-6/3 property). Photos of the previous premises (House 22, Street 4, F-6/3) are kept in `assets/house-22-f6-3/` for the record and are not used on the site.
 
-Prices are set by four values at the `// PRICES` comment in `app.js` (base rate, extra guest, tax, maximum paying guests per room). The page fills every displayed price from them; the figures typed in `index.html` are fallbacks for visitors without JavaScript, so update those too. Current formula: one guest is 10,500 × 1.2075 (15% GST, then 5% bed tax) rounded to the nearest 100 = PKR 12,700; each additional paying guest is 1,500 × 1.2075 rounded = PKR 1,800; multiplied by nights. Sharing children do not affect price. More than four paying guests, or interconnected rooms, show “Ask for a quote”.
+Prices are set by the values at the `// PRICES` comment in `app.js` (base rate, extra guest, tax, rounding). The page fills every displayed price from them; the figures typed in `index.html` are fallbacks for visitors without JavaScript, so update those too. One guest is 10,500 × 1.2075 (15% GST, then 5% bed tax) rounded to the nearest 100 = PKR 12,700; each additional guest is 1,500 × 1.2075 rounded = PKR 1,800; multiplied by nights. The price guide asks only for guests, nights and a room preference; five or more guests, more than a week, or interconnected rooms show “Ask for a quote”. No discounts are published: the site rate is the ceiling and reception quotes better rates in the WhatsApp chat.
 
 ## Content notes
 

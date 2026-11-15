@@ -81,49 +81,36 @@ function updateRoute(){const url=new URL('https://www.google.com/maps/dir/');url
 $('destination').addEventListener('change',()=>{$('custom-destination-field').hidden=$('destination').value!=='custom';updateRoute();});
 $('custom-destination').addEventListener('input',updateRoute);
 $('route-link').addEventListener('click',event=>{if($('destination').value==='custom'&&!$('custom-destination').value.trim()){event.preventDefault();$('custom-destination').focus();}});$('travel').addEventListener('change',updateRoute);updateRoute();
-// Date-only arithmetic avoids daylight-saving and browser locale differences.
-function nextDay(date){return new Date(Date.parse(date+'T00:00:00Z')+86400000).toISOString().slice(0,10);}
-const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Karachi',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-$('checkin').min=today;$('checkout').min=nextDay(today);
 // PRICES: change these values to update every price shown on the site.
 const BASE_RATE=10500;      // one guest, per night, before tax
 const EXTRA_GUEST=1500;     // each additional paying guest, before tax
 const TAX=1.15*1.05;        // 15% GST, then 5% bed tax = 20.75%
-const MAX_PAYING=4;         // most rooms take up to this many paying guests
 const ROUND_TO=100;         // shown prices are rounded to the nearest 100
 const withTax=amount=>Math.round(amount*TAX/ROUND_TO)*ROUND_TO;
 const pkr=amount=>'PKR '+amount.toLocaleString('en-PK');
-const perNight=paying=>withTax(BASE_RATE)+withTax(EXTRA_GUEST)*(paying-1);
-function quote(adults,mattresses,nights){return perNight(adults+mattresses)*nights;}
-document.querySelectorAll('[data-price]').forEach(el=>{const k=el.dataset.price;el.textContent=pkr(k==='extra'?withTax(EXTRA_GUEST):perNight(Number(k)));});
-function stayNights(){return Math.round((Date.parse($('checkout').value+'T00:00:00Z')-Date.parse($('checkin').value+'T00:00:00Z'))/86400000);}
-function updateEstimate(){
- const nights=stayNights();const valid=Number.isFinite(nights)&&nights>0;
- const paying=Number($('adults').value)+Number($('mattresses').value);
- const family=$('room-type').value==='Interconnected rooms'||paying>MAX_PAYING;
- $('estimate-label').textContent=family?'Multiple rooms or a larger group':'Estimated '+(valid?`${nights}-night room total`:'room rate / night');
- $('estimate').textContent=family?'Ask for a quote':pkr(quote(Number($('adults').value),Number($('mattresses').value),valid?nights:1));
+const perNight=guests=>withTax(BASE_RATE)+withTax(EXTRA_GUEST)*(guests-1);
+document.querySelectorAll('[data-price]').forEach(el=>{el.textContent=pkr(perNight(Number(el.dataset.price)));});
+// Rough price guide: nothing is required; it only prepares a WhatsApp message.
+function estimate(){
+ const guests=$('guests').value,nights=$('nights').value,room=$('room-type').value;
+ if(guests==='more'||nights==='more'||room==='Interconnected rooms')return null;
+ return perNight(Number(guests))*Number(nights);
 }
-$('checkin').addEventListener('change',()=>{if($('checkin').value){$('checkout').min=nextDay($('checkin').value);if($('checkout').value&&$('checkout').value<=$('checkin').value)$('checkout').value=nextDay($('checkin').value);}updateEstimate();});
-['checkout','adults','mattresses','room-type'].forEach(id=>$(id).addEventListener('change',updateEstimate));
-$('children').addEventListener('change',()=>{
- const children=Number($('children').value);
- $('children-details').hidden=children===0;
- for(const option of $('mattresses').options)option.disabled=Number(option.value)>children;
- if(Number($('mattresses').value)>children)$('mattresses').value=String(Math.min(children,2));
- updateEstimate();
-});
-document.querySelectorAll('[data-room]').forEach(link=>link.addEventListener('click',()=>{$('room-type').value=link.dataset.room;updateEstimate();}));
+function updateEstimate(){
+ const total=estimate(),nights=Number($('nights').value);
+ $('estimate-label').textContent=total===null?'Larger group or longer stay':(nights>1?`Estimated ${nights}-night total`:'Estimated rate for one night');
+ $('estimate').textContent=total===null?'Ask for a quote':pkr(total);
+}
+['guests','nights','room-type'].forEach(id=>$(id).addEventListener('change',updateEstimate));updateEstimate();
 $('booking-form').addEventListener('submit',event=>{
- event.preventDefault();$('form-error').textContent='';
- const nights=stayNights();
- if($('checkin').value<today || !Number.isFinite(nights) || nights<1){$('form-error').textContent='Please choose valid dates, with check-out after check-in.';return;}
- const children=Number($('children').value);
- const party=`${$('adults').value} adult(s)`+(children?`, ${children} child(ren), ${$('mattresses').value} child mattress(es)`:'');
- const message=`Hello Embassy Lodge, is a ${$('room-type').value.toLowerCase()} available?\n${$('checkin').value} to ${$('checkout').value} · ${nights} night(s)\n${party}\nPlease confirm availability and total price. [Website]`;
-
- track('whatsapp_click','enquiry_form');
+ event.preventDefault();
+ const total=estimate();
+ const pick=id=>$(id).options[$(id).selectedIndex].text;
+ const message=`Hello Embassy Lodge, I would like to ask about a stay.\nGuests: ${pick('guests')} · Nights: ${pick('nights')}\nRoom: ${pick('room-type')}`+(total===null?'':`\nWebsite estimate: ${pkr(total)}`)+`\nPlease confirm availability and your best price. [Website]`;
+ track('whatsapp_click','price_guide');
  window.location.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(message);
 });
+// Directions experiment: count how often the folded directions tool is opened.
+$('route-tool').addEventListener('toggle',()=>{if($('route-tool').open)track('directions_open','location');});
 // Temporary closure notice: keep keyboard and screen-reader focus inside it while it is present.
 if($('closure')){document.querySelectorAll('body > header, body > main, body > footer, .mobile-contact').forEach(el=>{el.inert=true;});}
